@@ -1,0 +1,14 @@
+@startuml
+scale 1.5
+
+[*] --> LED_NORMAL
+
+LED_NORMAL --> LED_WATERING : pumpState == PUMP_ON
+LED_NORMAL --> LED_LOW_MOISTURE_ALERT : soilMoisturePercent < minMoistureThreshold
+LED_NORMAL --> LED_ERROR: something wrong
+LED_LOW_MOISTURE_ALERT --> LED_WATERING: pumpState == PUMP_ON
+LED_LOW_MOISTURE_ALERT --> LED_ERROR: something wrong
+LED_WATERING --> LED_NORMAL: pumpState == PUMP_OFF &&\nsoilMoisturePercent > minMoistureThreshold
+LED_WATERING --> LED_LOW_MOISTURE_ALERT: pumpState == PUMP_OFF &&\nsoilMoisturePercent < minMoistureThreshold
+LED_WATERING --> LED_ERROR: something wrong
+@enduml
